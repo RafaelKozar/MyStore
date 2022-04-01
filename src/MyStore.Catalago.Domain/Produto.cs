@@ -9,7 +9,7 @@ namespace MyStore.Catalago.Domain
 {
     public class Produto : Entity, IAggregateRoot
     {
-        public Produto(string nome, string descricao, bool ativo, decimal valor, Guid categoriaId, DateTime dataCadastro, string imagem)
+        public Produto(string nome, string descricao, bool ativo, decimal valor, Guid categoriaId, DateTime dataCadastro, string imagem, Dimensoes dimensoes)
         {
             Nome = nome;
             Descricao = descricao;
@@ -18,6 +18,7 @@ namespace MyStore.Catalago.Domain
             CategoriaId = categoriaId;
             DataCadastro = dataCadastro;
             Imagem = imagem;
+            Dimensoes = dimensoes;
             Validar();
         }
 
@@ -29,6 +30,7 @@ namespace MyStore.Catalago.Domain
         public DateTime DataCadastro { get; private set; }
         public string Imagem { get; private set; }
         public int QuantidadeEstoque { get; private set; }
+        public Dimensoes Dimensoes { get; private set; }
         public Categoria Categoria { get; private set; }
 
         public void Ativar() => Ativo = true;

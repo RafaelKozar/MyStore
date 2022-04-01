@@ -1,3 +1,8 @@
 .vs/
 src/MyStore.Catalago.Domain/obj/
 src/MyStore.Core/obj/
+MyStore.Catalago.Data/obj/
+src/MyStore.Catalago.Domain/bin/
+src/MyStore.Core/bin/
+tests/MyStore.Catalogo.Domain.Tests/bin/
+tests/MyStore.Catalogo.Domain.Tests/obj/
