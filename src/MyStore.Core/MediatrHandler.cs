@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyStore.Core
 {
-    internal class MediatrHandler
+    public class MediatrHandler 
     {
     }
 }
