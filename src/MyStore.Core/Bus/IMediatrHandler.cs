@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyStore.Core
+namespace MyStore.Core.Bus
 {
     public interface IMediatrHandler
     {
