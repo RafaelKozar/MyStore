@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace MyStore.Catalago.Domain
 {
+    /// <summary>
+    /// Uma agragação de com a entidade categoria
+    /// </summary>
     public class Produto : Entity, IAggregateRoot
     {
         public Produto(string nome, string descricao, bool ativo, decimal valor, Guid categoriaId, DateTime dataCadastro, string imagem, Dimensoes dimensoes)

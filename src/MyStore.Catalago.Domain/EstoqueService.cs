@@ -8,8 +8,13 @@ using System.Threading.Tasks;
 
 namespace MyStore.Catalago.Domain
 {
+    /// <summary>
+    /// Serviço de domínio representa uma açõa da linguagem ubiqua e que é usado em mais de um lugar
+    /// Isso faz pensar não apenas como entidade, mas sim como ações do negócio (não é meramente atualizar um produto)
+    /// </summary>
     public class EstoqueService : IEstoqueService
     {
+
         private readonly IProdutoRepository _produtoRepository;
         private readonly IMediatrHandler _bus;
 

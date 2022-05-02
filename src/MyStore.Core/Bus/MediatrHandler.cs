@@ -19,7 +19,7 @@ namespace MyStore.Core.Bus
 
         public async Task PublicarEvento<T>(T evento) where T : Event
         {
-            _mediator.Publish(evento);
+            await _mediator.Publish(evento);
         }
     }
 

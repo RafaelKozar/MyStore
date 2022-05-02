@@ -18,7 +18,7 @@ namespace MyStore.Catalago.Domain.Events
 
         public async Task Handle(ProdutoAbaixoEstoqueEvent mensagem, CancellationToken cancellationToken)
         {
-            var produto = await _produtoRepository.ObterPorId(mensagem.AggregateId);
+            var produto = await _produtoRepository.ObterPorId(mensagem.AggregateId);          
             // Enviar e-mail para aquisição de mais produtos
         }
     }
