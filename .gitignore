@@ -7,3 +7,11 @@ src/MyStore.Core/bin/
 tests/MyStore.Catalogo.Domain.Tests/bin/
 tests/MyStore.Catalogo.Domain.Tests/obj/
 src/MyStore.Catalago.Application/obj/
+src/MyStore.Catalago.Data/bin/Debug/net6.0/MyStore.Catalago.Data.pdb
+src/MyStore.Catalago.Data/bin/Debug/net6.0/MyStore.Catalago.Data.deps.json
+src/MyStore.Catalago.Data/bin/Debug/
+src/MyStore.Catalago.Application/bin/Debug/
+src/MyStore.Catalago.Data/obj/
+src/MyStore.WebApp.MVC2/bin/
+src/MyStore.WebApp.MVC2/obj/
+src/MyStore.WebApp.MVC2/wwwroot/lib/
