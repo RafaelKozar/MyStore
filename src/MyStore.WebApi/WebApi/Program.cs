@@ -5,6 +5,7 @@ using MyStore.Catalago.Application.Services;
 using MyStore.Catalago.Data;
 using MyStore.Catalago.Data.Repository;
 using MyStore.Catalago.Domain;
+using MyStore.Catalago.Domain.Events;
 using MyStore.Core.Bus;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,7 +31,7 @@ builder.Services.AddScoped<IEstoqueService, EstoqueService>();
 builder.Services.AddScoped<IMediatrHandler, MediatrHandler>();
 
 builder.Services.AddScoped<IProdutoAppService, ProdutoAppService>();
-
+builder.Services.AddScoped<INotificationHandler<ProdutoAbaixoEstoqueEvent>, ProdutoEventHandler>();
 
 var app = builder.Build();
 var tt = WebApplication.CreateBuilder();
