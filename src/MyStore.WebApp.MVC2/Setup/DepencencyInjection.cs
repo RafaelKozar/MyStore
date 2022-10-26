@@ -3,6 +3,7 @@ using MyStore.Catalago.Data;
 using MyStore.Catalago.Data.Repository;
 using MyStore.Catalago.Domain;
 using MyStore.Core.Bus;
+using RestSharp;
 
 namespace MyStore.WebApp.MVC2.Setup
 {
@@ -16,7 +17,8 @@ namespace MyStore.WebApp.MVC2.Setup
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
             services.AddScoped<IProdutoAppService, ProdutoAppService>();
             services.AddScoped<IEstoqueService, EstoqueService>();
-            services.AddScoped<CatalagoContext> ();
+            services.AddSingleton(new RestClient("https://localhost:7139/"));
+            //services.AddScoped<CatalagoContext> ();
         }
     }
 }

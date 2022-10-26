@@ -22,7 +22,8 @@ namespace MyStore.Catalago.Data.Repository
 
         public async Task<IEnumerable<Produto>> ObterTodos()
         {
-            return await _context.Produtos.AsNoTracking().ToListAsync();
+            return await _context.Produtos.ToListAsync();
+            
         }
 
         public async Task<Produto> ObterPorId(Guid id)

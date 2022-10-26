@@ -15,3 +15,5 @@ src/MyStore.Catalago.Data/obj/
 src/MyStore.WebApp.MVC2/bin/
 src/MyStore.WebApp.MVC2/obj/
 src/MyStore.WebApp.MVC2/wwwroot/lib/
+/src/MyStore.WebApi/WebApi/bin/Debug/net6.0
+/src/MyStore.WebApi/WebApi/obj

@@ -19,6 +19,7 @@ namespace MyStore.Catalago.Domain
         public string Nome { get; private set; }
         public int Codigo { get; private set; }
 
+        //EF Relation
         public ICollection<Produto> Produtos { get; set;}
 
         protected Categoria() { }

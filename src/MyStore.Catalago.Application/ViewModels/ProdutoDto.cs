@@ -49,6 +49,6 @@ namespace MyStore.Catalago.Application.ViewModels
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public int Profundidade { get; set; }
 
-        public IEnumerable<CategoriaDto> Categorias { get; set; }
+        public IEnumerable<CategoriaDto>? Categorias { get; set; }
     }
 }

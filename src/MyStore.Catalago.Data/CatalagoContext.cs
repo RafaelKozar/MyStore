@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using MyStore.Catalago.Domain;
 using MyStore.Core.Data;
 using System;
@@ -10,10 +11,10 @@ using System.Threading.Tasks;
 namespace MyStore.Catalago.Data
 {
     public class CatalagoContext : DbContext, IUnitOfWork
-    {
-        public CatalagoContext(DbContextOptions options) : base(options)
-        {
-        }
+    {       
+        public CatalagoContext(DbContextOptions<CatalagoContext> options) : base(options)
+        {}      
+
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
 

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.Data.SqlClient;
 using MyStore.Catalago.Application.ViewModels;
+using MyStore.Catalago.Data;
 using MyStore.Catalago.Domain;
 using MyStore.Core.DomainObjects;
 using System;
@@ -35,9 +37,47 @@ namespace MyStore.Catalago.Application.Services
             return _mapper.Map<ProdutoDto>(await _produtoRepository.ObterPorId(id));
         }
 
+        //private static string db_source = "Data Source=ARTCWBINTDVC007\SQLEXPRESS; Inital Catalog=MyStoreDb";
+        private static string db_source = "ARTCWBINTDVC007\\SQLEXPRESS";
+        private static string db_user = "userk";
+        private static string db_password = "Deus2@22";
+        private static string db_database = "MyStoreDb";
+
+        private SqlConnection GetConnection()
+        {
+
+            var _builder = new SqlConnectionStringBuilder();
+            _builder.DataSource = db_source;            
+            _builder.UserID = db_user;
+            _builder.Password = db_password;
+            _builder.InitialCatalog = db_database;
+            return new SqlConnection(_builder.ConnectionString);
+        }
+
         public async Task<IEnumerable<ProdutoDto>> ObterTodos()
         {
+            //List<Produto> _product_lst = new List<Produto>();
+            //string _statement = "SELECT * from Produtos";
+            //SqlConnection _connection = GetConnection();
+
+            //_connection.Open();
+
+            //SqlCommand _sqlcommand = new SqlCommand(_statement, _connection);
+
+            //using (SqlDataReader _reader = _sqlcommand.ExecuteReader())
+            //{
+            //    while (_reader.Read())
+            //    {
+            //        Console.WriteLine(_reader.GetGuid(0));
+            //        Console.WriteLine(_reader.GetGuid(1));
+            //        Console.WriteLine(_reader.GetString(2));
+            //    }
+            //}
+            //_connection.Close();
+            //return null;
+
             return _mapper.Map<IEnumerable<ProdutoDto>>(await _produtoRepository.ObterTodos());
+            //var ctx = new CatalagoContext();
         }
 
         public async Task<IEnumerable<CategoriaDto>> ObterCategorias()
