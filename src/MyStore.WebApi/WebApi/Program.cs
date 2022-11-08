@@ -7,6 +7,7 @@ using MyStore.Catalago.Data.Repository;
 using MyStore.Catalago.Domain;
 using MyStore.Catalago.Domain.Events;
 using MyStore.Core.Bus;
+using WebApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,14 +25,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<CatalagoContext>(p =>
     p.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
-builder.Services.AddScoped<IEstoqueService, EstoqueService>();
-//builder.Services.AddScoped<CatalagoContext>();
-// Domain Bus(Mediator)
-builder.Services.AddScoped<IMediatrHandler, MediatrHandler>();
-
-builder.Services.AddScoped<IProdutoAppService, ProdutoAppService>();
-builder.Services.AddScoped<INotificationHandler<ProdutoAbaixoEstoqueEvent>, ProdutoEventHandler>();
+builder.Services.RegisterServices();
 
 var app = builder.Build();
 var tt = WebApplication.CreateBuilder();
