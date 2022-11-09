@@ -2,7 +2,7 @@
 using MyStore.Catalago.Data;
 using MyStore.Catalago.Data.Repository;
 using MyStore.Catalago.Domain;
-using MyStore.Core.Bus;
+using MyStore.Core.Comunication.Mediator;
 using RestSharp;
 
 namespace MyStore.WebApp.MVC2.Setup
@@ -12,7 +12,7 @@ namespace MyStore.WebApp.MVC2.Setup
         public static void RegisterServices(this IServiceCollection services)
         {
             // Domain Bus(Mediator)
-            services.AddScoped<IMediatrHandler, MediatrHandler>();
+            services.AddScoped<IMediatorHandler, MediatrHandler>();
             // Catalogo
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
             services.AddScoped<IProdutoAppService, ProdutoAppService>();

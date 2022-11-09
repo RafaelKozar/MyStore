@@ -1,5 +1,5 @@
 ﻿using MyStore.Catalago.Domain.Events;
-using MyStore.Core.Bus;
+using MyStore.Core.Comunication.Mediator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +16,9 @@ namespace MyStore.Catalago.Domain
     {
 
         private readonly IProdutoRepository _produtoRepository;
-        private readonly IMediatrHandler _bus;
+        private readonly IMediatorHandler _bus;
 
-        public EstoqueService(IProdutoRepository produtoRepository, IMediatrHandler bus) 
+        public EstoqueService(IProdutoRepository produtoRepository, IMediatorHandler bus) 
         {
             _produtoRepository = produtoRepository;
             _bus = bus;

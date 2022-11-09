@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyStore.Core.DomainObjects
+namespace MyStore.Core.Messages.CommonMessages.DomainEvents
 {
     public class DomainEvent : Event
     {
         public DomainEvent(Guid aggregateId)
         {
-            AggregateId = aggregateId;  
+            AggregateId = aggregateId;
         }
     }
 }

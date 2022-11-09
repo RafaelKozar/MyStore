@@ -3,7 +3,8 @@ using MyStore.Catalago.Application.Services;
 using MyStore.Catalago.Data.Repository;
 using MyStore.Catalago.Domain;
 using MyStore.Catalago.Domain.Events;
-using MyStore.Core.Bus;
+using MyStore.Core.Comunication.Mediator;
+using MyStore.Core.Messages.CommonMessages.Notifications;
 using MyStore.Vendas.Application.Commands;
 using MyStore.Vendas.Data.Repository;
 using MyStore.Vendas.Domain;
@@ -14,8 +15,11 @@ namespace WebApi
     {
         public static void RegisterServices(this IServiceCollection services)
         {
-            //Domain Bus (Mediator)
-            services.AddScoped<IMediatrHandler, MediatrHandler>();
+            //Mediator (se fosse bus, seria a mesma implementação)
+            services.AddScoped<IMediatorHandler, MediatrHandler>();
+
+            //Notifications
+            services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
 
             //Catalogo
             services.AddScoped<IProdutoRepository, ProdutoRepository>();

@@ -1,4 +1,4 @@
-﻿using MyStore.Core.DomainObjects;
+﻿using MyStore.Core.Messages.CommonMessages.DomainEvents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
