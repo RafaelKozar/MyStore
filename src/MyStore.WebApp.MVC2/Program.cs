@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using MyStore.Catalago.Application.AutoMapper;
 using MyStore.Catalago.Data;
+using MyStore.Vendas.Data;
 using MyStore.WebApp.MVC2.Setup;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,9 @@ builder.Services.AddAutoMapper(typeof(DomainToDtoMappingProfile), typeof(DtoToDo
 builder.Services.AddMediatR(typeof(Program));
 
 builder.Services.AddDbContext<CatalagoContext>(p =>
+    p.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddDbContext<VendasContext>(p =>
     p.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 

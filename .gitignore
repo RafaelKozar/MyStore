@@ -20,3 +20,6 @@ src/MyStore.WebApp.MVC2/wwwroot/lib/
 /src/MyStore.Vendas.Application/obj
 /src/MyStore.Vendas.Data/obj
 /src/MyStore.Vendas.Domain/obj
+/src/MyStore.Vendas.Application/bin/Debug/net6.0
+/src/MyStore.Vendas.Data/bin/Debug/net6.0
+/src/MyStore.Vendas.Domain/bin/Debug/net6.0
