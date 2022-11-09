@@ -5,6 +5,8 @@ using MyStore.Vendas.Application.Commands;
 
 namespace WebApi.Controllers
 {
+    //[ApiController]
+    [Route("[controller]")]
     public class CarrinhoController : ControllerBase
     {
         private readonly IProdutoAppService _produtoAppService;
@@ -16,7 +18,7 @@ namespace WebApi.Controllers
             _mediatorHandler = mediatorHandler;
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("meu-carrinho")]
         public async Task<IActionResult> AdicionarItem(Guid id, int quantidade)
         {

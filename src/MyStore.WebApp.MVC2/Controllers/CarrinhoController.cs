@@ -6,19 +6,25 @@ namespace MyStore.WebApp.MVC2.Controllers
 {
     public class CarrinhoController : Controller
     {
-
         private readonly IProdutoAppService _produtoAppService;
+        private readonly RestClient _restClient;
 
-        public CarrinhoController(IProdutoAppService produtoAppService)
+        public CarrinhoController(IProdutoAppService produtoAppService, RestClient restClient)
         {
             _produtoAppService = produtoAppService;
+            _restClient = restClient;
         }
 
         [HttpPost]
         [Route("meu-carrinho")]
         public async Task<IActionResult> AdicionarItem(Guid id, int quantidade)
         {
-            throw new NotImplementedException();    
+            var request = new RestRequest("Carrinho/meu-carrinho", Method.Get);
+            request.AddParameter("id", id);
+            request.AddParameter("quantidade", quantidade);
+            await _restClient.GetAsync(request);
+            return Ok();   
+
             //var request = new RestRequest("Produto", Method.Post);
             //request.AddJsonBody(produtoDto);
             //await _restClient.PostAsync(request);

@@ -22,7 +22,7 @@ namespace MyStore.Vendas.Domain
         public IReadOnlyCollection<PedidoItem> PedidoItems => _pedidoItems;
 
         // EF Rel.
-        public Voucher Voucher { get; private set; }
+        public Voucher? Voucher { get; private set; }
 
         public Pedido(Guid clienteId, bool voucherUtilizado, decimal desconto, decimal valorTotal)
         {

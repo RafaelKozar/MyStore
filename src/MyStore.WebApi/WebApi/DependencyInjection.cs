@@ -5,6 +5,8 @@ using MyStore.Catalago.Domain;
 using MyStore.Catalago.Domain.Events;
 using MyStore.Core.Bus;
 using MyStore.Vendas.Application.Commands;
+using MyStore.Vendas.Data.Repository;
+using MyStore.Vendas.Domain;
 
 namespace WebApi
 {
@@ -24,6 +26,7 @@ namespace WebApi
 
             //Vendas
             services.AddScoped<IRequestHandler<AdicionarItemPedidoCommand, bool>, PedidoCommandHandler>();
+            services.AddScoped<IPedidoRepository, PedidoRepository>();
         }
     }
 }
