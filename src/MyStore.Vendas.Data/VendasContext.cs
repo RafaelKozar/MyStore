@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MyStore.Core.Bus;
+
 using MyStore.Core.Data;
 using MyStore.Core.Messages;
 using MyStore.Vendas.Domain;

@@ -6,7 +6,7 @@ using MyStore.Catalago.Data;
 using MyStore.Catalago.Data.Repository;
 using MyStore.Catalago.Domain;
 using MyStore.Catalago.Domain.Events;
-using MyStore.Core.Bus;
+
 using MyStore.Vendas.Data;
 using WebApi;
 

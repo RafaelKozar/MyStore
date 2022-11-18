@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyStore.Catalago.Application.Services;
+using MyStore.Core.DomainObjects;
 using RestSharp;
 
 namespace MyStore.WebApp.MVC2.Controllers
@@ -22,8 +23,15 @@ namespace MyStore.WebApp.MVC2.Controllers
             var request = new RestRequest("Carrinho/meu-carrinho", Method.Get);
             request.AddParameter("id", id);
             request.AddParameter("quantidade", quantidade);
-            await _restClient.GetAsync(request);
-            return Ok();   
+            var response = await _restClient.GetAsync<ResponseObject>(request);
+
+            //return null;
+            return RedirectToAction("ProdutoDetalhe", "Vitrine", Guid.Parse("9703a726-6257-49c3-884b-49be87521325"));
+            //if (string.IsNullOrEmpty(response.ControllerName))
+            //    return RedirectToAction("Index");
+            
+
+            //return RedirectToAction(response.ActionName, response.ControllerName, response.property);
 
             //var request = new RestRequest("Produto", Method.Post);
             //request.AddJsonBody(produtoDto);
