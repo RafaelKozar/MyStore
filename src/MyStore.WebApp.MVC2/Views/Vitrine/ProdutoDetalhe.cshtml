@@ -1,5 +1,5 @@
 ﻿@model MyStore.Catalago.Application.ViewModels.ProdutoDto
-        
+
 @{
     ViewData["Title"] = "Produto Detalhe";
 }
@@ -142,8 +142,24 @@
     }
 </style>
 <div class="container">
-    
+
     <vc:summary />
+
+    @if (!string.IsNullOrEmpty(@Model.messages))
+    {
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <h3 id="msgRetorno">Opa! Algo deu errado:</h3>
+            @{
+                var erros = @Model.messages.Split("-");
+                foreach (var erro in erros)
+                {
+                    <p>@erro</p>
+                }
+            }
+
+        </div>
+    }
 
     <div class="row">
         <div class="col-xs-4 item-photo">
@@ -160,13 +176,13 @@
             <p>@Model.Descricao</p>
             <form method="post" asp-controller="Carrinho" asp-action="AdicionarItem">
 
-                <input type="hidden" id="Id" name="Id" value="@Model.Id"/>
+                <input type="hidden" id="Id" name="Id" value="@Model.Id" />
 
                 <div class="section" style="padding-bottom: 20px;">
                     <h6 class="title-attr"><small>QUANTIDADE</small></h6>
                     <div>
                         <div class="btn-minus"><span style="font-size: 15px">-</span></div>
-                        <input id="quantidade" name="quantidade" style="font-size: 15px" type="text" value="1"/>
+                        <input id="quantidade" name="quantidade" style="font-size: 15px" type="text" value="1" />
                         <div class="btn-plus"><span style="font-size: 15px">+</span></div>
                     </div>
                 </div>
@@ -185,41 +201,41 @@
 
 @section Scripts
 {
-    <script>
-        $(document).ready(function(){
-            //-- Click on detail
-            $("ul.menu-items > li").on("click",function(){
-                $("ul.menu-items > li").removeClass("active");
-                $(this).addClass("active");
-            })
-
-            $(".attr,.attr2").on("click",function(){
-                var clase = $(this).attr("class");
-
-                $("." + clase).removeClass("active");
-                $(this).addClass("active");
-            })
-
-            //-- Click on QUANTITY
-            $(".btn-minus").on("click",function(){
-                var now = $(".section > div > input").val();
-                if ($.isNumeric(now)){
-                    if (parseInt(now) -1 > 0){ now--;}
-                    $(".section > div > input").val(now);
-                }else{
-                    $(".section > div > input").val("1");
-                }
-            })
-            $(".btn-plus").on("click",function(){
-                var now = $(".section > div > input").val();
-                if ($.isNumeric(now)){
-                    $(".section > div > input").val(parseInt(now)+1);
-                }else{
-                    $(".section > div > input").val("1");
-                }
-            })
+<script>
+    $(document).ready(function(){
+        //-- Click on detail
+        $("ul.menu-items > li").on("click",function(){
+            $("ul.menu-items > li").removeClass("active");
+            $(this).addClass("active");
         })
-    </script>
+
+        $(".attr,.attr2").on("click",function(){
+            var clase = $(this).attr("class");
+
+            $("." + clase).removeClass("active");
+            $(this).addClass("active");
+        })
+
+        //-- Click on QUANTITY
+        $(".btn-minus").on("click",function(){
+            var now = $(".section > div > input").val();
+            if ($.isNumeric(now)){
+                if (parseInt(now) -1 > 0){ now--;}
+                $(".section > div > input").val(now);
+            }else{
+                $(".section > div > input").val("1");
+            }
+        })
+        $(".btn-plus").on("click",function(){
+            var now = $(".section > div > input").val();
+            if ($.isNumeric(now)){
+                $(".section > div > input").val(parseInt(now)+1);
+            }else{
+                $(".section > div > input").val("1");
+            }
+        })
+    })
+</script>
 }
 
 

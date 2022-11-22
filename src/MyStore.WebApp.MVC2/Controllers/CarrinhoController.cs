@@ -2,6 +2,7 @@
 using MyStore.Catalago.Application.Services;
 using MyStore.Core.DomainObjects;
 using RestSharp;
+using System.Text;
 
 namespace MyStore.WebApp.MVC2.Controllers
 {
@@ -25,26 +26,32 @@ namespace MyStore.WebApp.MVC2.Controllers
             request.AddParameter("quantidade", quantidade);
             var response = await _restClient.GetAsync<ResponseObject>(request);
 
-            //return null;
-            return RedirectToAction("ProdutoDetalhe", "Vitrine", Guid.Parse("9703a726-6257-49c3-884b-49be87521325"));
-            //if (string.IsNullOrEmpty(response.ControllerName))
-            //    return RedirectToAction("Index");
-            
+            Dictionary<string, string> obj = new Dictionary<string, string>();
 
-            //return RedirectToAction(response.ActionName, response.ControllerName, response.property);
+            //var parms = new Dictionary<string, string>
+            //    {
+            //        { "id",id.ToString() },
+            //        { "messages","kjfsjdfkl"}
+            //    };
 
-            //var request = new RestRequest("Produto", Method.Post);
-            //request.AddJsonBody(produtoDto);
-            //await _restClient.PostAsync(request);
+            obj.Add("id", id.ToString());
+            if (response.messages != null)
+                obj.Add("messages", response.messages);
 
-            //var produto = await _produtoAppService.ObterPorId(id);
-            //if (produto == null) return BadRequest();
+            var builder = new StringBuilder();
 
-            //if (produto.QuantidadeEstoque < quantidade)
-            //{
-            //    TempData["Erro"] = "Produto com estoque insuficiente";
-            //    return RedirectToAction("ProdutoDetalhe", "Vitrine", new { id });
-            //}
+            foreach (var key in obj.Keys)
+            {
+                builder.Append($"{key}={obj[key]}").Append("&");
+            }
+
+            var str = builder.ToString();
+            str = str.Remove(str.Length - 1);            
+            var uri = new Uri($"https://localhost:7088/produto-detalhe?{str}");
+            var u = uri.AbsoluteUri;
+
+            return Redirect(u);
+           
         }
 
         public IActionResult Index()

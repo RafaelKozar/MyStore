@@ -25,13 +25,17 @@ namespace MyStore.WebApp.MVC2.Controllers
         }
 
         [HttpGet]
-        [Route("produto-detalhe/{id}")]
-        public async Task<IActionResult> ProdutoDetalhe(Guid id)
-        {
-            var request = new RestRequest($"Produto/{id.ToString()}", Method.Get);
-            var result = await _restClient.GetAsync<ProdutoDto>(request);
+        [Route("produto-detalhe")]
+        public async Task<IActionResult> ProdutoDetalhe(Dictionary<string, string> valuePairs)
+        {            
+            Console.WriteLine("\\n\\n\\n");
+            var request = new RestRequest($"Produto/{valuePairs["id"]}", Method.Get);
+            var result = await _restClient.GetAsync<ProdutoDto>(request);            
+            if (valuePairs.ContainsKey("messages"))
+                result.messages = valuePairs["messages"];
+
             return View(result);
-            //return View(await _produtoAppService.ObterPorId(id));
+           
         }
     }
 }

@@ -5,6 +5,7 @@ using MyStore.Core.Comunication.Mediator;
 using MyStore.Core.DomainObjects;
 using MyStore.Core.Messages.CommonMessages.Notifications;
 using MyStore.Vendas.Application.Commands;
+using System.Text;
 
 namespace WebApi.Controllers
 {
@@ -37,14 +38,15 @@ namespace WebApi.Controllers
                 //return RedirectToAction("ProdutoDetalhe", "Vitrine", new { id });
                 return Ok(new
                 {
-                    ActionName = "ProdutoDetalhe",
+                    ActionName = "produto-detalhe",
                     ControllerName = "Vitrine",
-                    property = id
+                    property = id,
+                    message = "Produto com estoque insuficiente"
                 });
             }
 
             //var command = new AdicionarItemPedidoCommand(ClienteId, produto.Id, produto.Nome, quantidade, produto.Valor);
-            var command = new AdicionarItemPedidoCommand(ClienteId, produto.Id, produto.Nome, 2000, produto.Valor);
+            var command = new AdicionarItemPedidoCommand(ClienteId, produto.Id, produto.Nome, 2000, 50000);
 
             await _mediatorHandler.EnviarComando(command);
 
@@ -58,13 +60,32 @@ namespace WebApi.Controllers
             }
 
 
+            var messages = ObterMensagensErro().ToList();
+            
+            //string str = string.Empty;
+            //messages.ForEach(w =>
+            //{
+            //    str += $"{w} +";
+            //});
+
+            var builder = new StringBuilder();
+
+            foreach (var m in messages)
+            {
+                builder.Append(m).Append("-");
+            }
+
+            var str = builder.ToString();
+            str = str.Remove(str.Length - 2);
+
             //TempData["Erros"] = "Produto Indisponível";            
             return Ok(new ResponseObject
             {
-                ActionName = "ProdutoDetalhe",
+                ActionName = "produto-detalhe",
                 ControllerName = "Vitrine",
-                property = id
-            });
+                property = id,
+                messages = str
+            }) ;
             
             //return RedirectToAction("ProdutoDetalhe", "Vitrine", new { id });
         }

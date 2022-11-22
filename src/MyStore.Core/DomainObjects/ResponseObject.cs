@@ -11,5 +11,6 @@ namespace MyStore.Core.DomainObjects
         public string? ActionName { get; set; }
         public string? ControllerName { get; set; }
         public object? property { get; set; }
+        public string? messages { get; set; }  
     }
 }
