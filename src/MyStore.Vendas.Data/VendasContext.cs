@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
+using MyStore.Core.Comunication.Mediator;
 using MyStore.Core.Data;
 using MyStore.Core.Messages;
 using MyStore.Vendas.Domain;
@@ -12,12 +12,13 @@ using System.Threading.Tasks;
 namespace MyStore.Vendas.Data
 {
     public class VendasContext : DbContext, IUnitOfWork
-    {       
+    {
+        private readonly IMediatorHandler _mediatorHandler;
 
-        public VendasContext(DbContextOptions<VendasContext> options)
+        public VendasContext(DbContextOptions<VendasContext> options, IMediatorHandler mediatorHandler)
             : base(options)
         {
-          
+            _mediatorHandler = mediatorHandler;
         }
 
         public DbSet<Pedido> Pedidos { get; set; }
@@ -40,7 +41,7 @@ namespace MyStore.Vendas.Data
             }
 
             var sucesso = await base.SaveChangesAsync() > 0;
-            //if (sucesso) await _mediatorHandler.PublicarEvento(this);
+            if (sucesso) await _mediatorHandler.PublicarEventos(this);
 
             return sucesso;
         }
@@ -52,7 +53,7 @@ namespace MyStore.Vendas.Data
                 property.SetColumnType("varchar(100)");
 
 
-            //modelBuilder.Ignore<Event>();
+            modelBuilder.Ignore<Event>();
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(VendasContext).Assembly);
 

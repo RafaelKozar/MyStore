@@ -2,6 +2,7 @@
 using MyStore.Core.Comunication.Mediator;
 using MyStore.Core.Messages;
 using MyStore.Core.Messages.CommonMessages.Notifications;
+using MyStore.Vendas.Application.Events;
 using MyStore.Vendas.Domain;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,7 @@ namespace MyStore.Vendas.Application.Commands
                 pedido.AdicionarItem(pedidoItem);
 
                 _pedidoRepository.Adicionar(pedido);
+                pedido.AdicionarEvento(new PedidoRascunhoIniciadoEvent(message.ClienteId, message.ProdutoId));
             }
             else
             {
@@ -49,8 +51,12 @@ namespace MyStore.Vendas.Application.Commands
                 {
                     _pedidoRepository.AdicionarItem(pedidoItem);
                 }
+
+                pedido.AdicionarEvento(new PedidoAtualizadoEvent(pedido.ClienteId, pedido.Id, pedido.ValorTotal));
+
             }
 
+            pedido.AdicionarEvento(new PedidoItemAdicionadoEvent(pedido.ClienteId, pedido.Id, message.ProdutoId, message.ValorUnitario, message.Quantidade, message.Nome));
             return await _pedidoRepository.UnitOfWork.Commit();
         }
 

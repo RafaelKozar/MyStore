@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using MyStore.Catalago.Domain;
 using MyStore.Core.Data;
+using MyStore.Core.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace MyStore.Catalago.Data
 
                 property.SetColumnType("varchar(100)");
 
+            modelBuilder.Ignore<Event>();
             
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(CatalagoContext).Assembly);
         }

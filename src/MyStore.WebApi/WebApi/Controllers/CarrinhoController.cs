@@ -45,8 +45,9 @@ namespace WebApi.Controllers
                 });
             }
 
-            //var command = new AdicionarItemPedidoCommand(ClienteId, produto.Id, produto.Nome, quantidade, produto.Valor);
-            var command = new AdicionarItemPedidoCommand(ClienteId, produto.Id, produto.Nome, 2000, 50000);
+            var command = new AdicionarItemPedidoCommand(ClienteId, produto.Id, produto.Nome, quantidade, produto.Valor);
+            //para teste
+            //var command = new AdicionarItemPedidoCommand(ClienteId, produto.Id, produto.Nome, 2000, 0);
 
             await _mediatorHandler.EnviarComando(command);
 
