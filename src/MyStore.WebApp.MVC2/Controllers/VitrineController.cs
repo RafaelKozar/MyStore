@@ -14,10 +14,9 @@ namespace MyStore.WebApp.MVC2.Controllers
         }
 
         [HttpGet]
-        [Route("vitrine")]
+        [Route("")]
         public async Task<IActionResult> Index()
         {
-
             var request = new RestRequest("Produto", Method.Get);
             var result = await _restClient.GetAsync<IEnumerable<ProdutoDto>>(request);
             return View(result);

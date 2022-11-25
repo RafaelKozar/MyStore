@@ -6,6 +6,8 @@ using MyStore.Catalago.Domain.Events;
 using MyStore.Core.Comunication.Mediator;
 using MyStore.Core.Messages.CommonMessages.Notifications;
 using MyStore.Vendas.Application.Commands;
+using MyStore.Vendas.Application.Events;
+using MyStore.Vendas.Application.Queries;
 using MyStore.Vendas.Data.Repository;
 using MyStore.Vendas.Domain;
 
@@ -31,6 +33,11 @@ namespace WebApi
             //Vendas
             services.AddScoped<IRequestHandler<AdicionarItemPedidoCommand, bool>, PedidoCommandHandler>();
             services.AddScoped<IPedidoRepository, PedidoRepository>();
+            services.AddScoped<IPedidoQueries, PedidoQueries>();
+
+            services.AddScoped<INotificationHandler<PedidoRascunhoIniciadoEvent>, PedidoEventHandler>();
+            services.AddScoped<INotificationHandler<PedidoAtualizadoEvent>, PedidoEventHandler>();
+            services.AddScoped<INotificationHandler<PedidoItemAdicionadoEvent>, PedidoEventHandler>();
         }
     }
 }

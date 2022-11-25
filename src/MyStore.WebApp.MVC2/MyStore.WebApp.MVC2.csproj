@@ -32,6 +32,7 @@
     <ProjectReference Include="..\MyStore.Catalago.Data\MyStore.Catalago.Data.csproj" />
     <ProjectReference Include="..\MyStore.Catalago.Domain\MyStore.Catalago.Domain.csproj" />
     <ProjectReference Include="..\MyStore.Core\MyStore.Core.csproj" />
+    <ProjectReference Include="..\MyStore.Vendas.Application\MyStore.Vendas.Application.csproj" />
     <ProjectReference Include="..\MyStore.Vendas.Data\MyStore.Vendas.Data.csproj" />
   </ItemGroup>
 
