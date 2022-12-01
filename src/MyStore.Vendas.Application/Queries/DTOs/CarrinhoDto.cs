@@ -16,6 +16,6 @@ namespace MyStore.Vendas.Application.Queries.DTOs
         public string VoucherCodigo { get; set; }
 
         public List<CarrinhoItemDto> Items { get; set; } = new List<CarrinhoItemDto>();
-        public CarrinhoPagamentoDto Pagamento { get; set; }
+        public CarrinhoPagamentoDto Pagamento { get; set; }   
     }
 }

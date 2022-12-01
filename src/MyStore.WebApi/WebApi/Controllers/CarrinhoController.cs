@@ -107,60 +107,65 @@ namespace WebApi.Controllers
         [Route("meu-carrinho2")]
         public async Task<ActionResult> AdicionarItem2(Guid id, int quantidade)
         {
-            return Ok(new { tess= "kgfdljk" });
+            return Ok(new { tess = "kgfdljk" });
         }
 
 
-        //[HttpPost]
-        //[Route("remover-item")]
-        //public async Task<IActionResult> RemoverItem(Guid id)
-        //{
-        //    var produto = await _produtoAppService.ObterPorId(id);
-        //    if (produto == null) return BadRequest();
+        [HttpPost]
+        [Route("remover-item")]
+        public async Task<IActionResult> RemoverItem(Guid id)
+        {
+            var produto = await _produtoAppService.ObterPorId(id);
+            if (produto == null) return BadRequest();
 
-        //    var command = new RemoverItemPedidoCommand(ClienteId, id);
-        //    await _mediatorHandler.EnviarComando(command);
+            var command = new RemoverItemPedidoCommand(ClienteId, id);
+            await _mediatorHandler.EnviarComando(command);
 
-        //    if (OperacaoValida())
-        //    {
-        //        return RedirectToAction("Index");
-        //    }
+            if (OperacaoValida())
+            {
+                return Ok();
+                ///return RedirectToAction("Index");
+            }
 
-        //    return View("Index", await _pedidoQueries.ObterCarrinhoCliente(ClienteId));
-        //}
+            return Ok(await _pedidoQueries.ObterCarrinhoCliente(ClienteId));
+        }
 
-        //[HttpPost]
-        //[Route("atualizar-item")]
-        //public async Task<IActionResult> AtualizarItem(Guid id, int quantidade)
-        //{
-        //    var produto = await _produtoAppService.ObterPorId(id);
-        //    if (produto == null) return BadRequest();
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CarrinhoDto))]
+        [Route("atualizar-item")]
+        public async Task<IActionResult> AtualizarItem(Guid id, int quantidade)
+        {
+            var produto = await _produtoAppService.ObterPorId(id);
+            if (produto == null) return BadRequest();
 
-        //    var command = new AtualizarItemPedidoCommand(ClienteId, id, quantidade);
-        //    await _mediatorHandler.EnviarComando(command);
+            var command = new AtualizarItemPedidoCommand(ClienteId, id, quantidade);
+            await _mediatorHandler.EnviarComando(command);
 
-        //    if (OperacaoValida())
-        //    {
-        //        return RedirectToAction("Index");
-        //    }
+            if (OperacaoValida())
+            {
+                return Ok();
+                //return RedirectToAction("Index");
+            }
 
-        //    return View("Index", await _pedidoQueries.ObterCarrinhoCliente(ClienteId));
-        //}
+            var re = await _pedidoQueries.ObterCarrinhoCliente(ClienteId);
+            return Ok(re);
+        }
 
-        //[HttpPost]
-        //[Route("aplicar-voucher")]
-        //public async Task<IActionResult> AplicarVoucher(string voucherCodigo)
-        //{
-        //    var command = new AplicarVoucherPedidoCommand(ClienteId, voucherCodigo);
-        //    await _mediatorHandler.EnviarComando(command);
+        [HttpPost]
+        [Route("aplicar-voucher")]
+        public async Task<IActionResult> AplicarVoucher(string voucherCodigo)
+        {
+            var command = new AplicarVoucherPedidoCommand(ClienteId, voucherCodigo);
+            await _mediatorHandler.EnviarComando(command);
 
-        //    if (OperacaoValida())
-        //    {
-        //        return RedirectToAction("Index");
-        //    }
+            if (OperacaoValida())
+            {
+                return Ok();
+                //return RedirectToAction("Index");
+            }
 
-        //    return View("Index", await _pedidoQueries.ObterCarrinhoCliente(ClienteId));
-        //}
+            return Ok(await _pedidoQueries.ObterCarrinhoCliente(ClienteId));
+        }
 
         //[Route("resumo-da-compra")]
         //public async Task<IActionResult> ResumoDaCompra()

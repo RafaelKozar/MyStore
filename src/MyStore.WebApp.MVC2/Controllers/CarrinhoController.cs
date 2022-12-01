@@ -62,62 +62,42 @@ namespace MyStore.WebApp.MVC2.Controllers
         public async Task<IActionResult> Index()
         {
             //meu - carrinho3
-            var request = new RestRequest("Carrinho/meu-carrinho3", Method.Get);
+            var request = new RestRequest("Carrinho/meu-carrinho3", Method.Get);         
             var response = await _restClient.GetAsync<CarrinhoDto>(request);
             return View(response);
         }
 
-        //[HttpPost]
-        //[Route("remover-item")]
-        //public async Task<IActionResult> RemoverItem(Guid id)
-        //{
-        //    var produto = await _produtoAppService.ObterPorId(id);
-        //    if (produto == null) return BadRequest();
+        [HttpPost]
+        [Route("remover-item")]
+        public async Task<IActionResult> RemoverItem(Guid id)
+        {
+            var request = new RestRequest("Carrinho/remover-item", Method.Post);
+            request.AddParameter("id", id);            
+            await _restClient.PostAsync<CarrinhoDto>(request);
+            return RedirectToAction("Index");        
+        }
 
-        //    var command = new RemoverItemPedidoCommand(ClienteId, id);
-        //    await _mediatorHandler.EnviarComando(command);
-
-        //    if (OperacaoValida())
-        //    {
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    return View("Index", await _pedidoQueries.ObterCarrinhoCliente(ClienteId));
-        //}
-
-        //[HttpPost]
-        //[Route("atualizar-item")]
-        //public async Task<IActionResult> AtualizarItem(Guid id, int quantidade)
-        //{
-        //    var produto = await _produtoAppService.ObterPorId(id);
-        //    if (produto == null) return BadRequest();
-
-        //    var command = new AtualizarItemPedidoCommand(ClienteId, id, quantidade);
-        //    await _mediatorHandler.EnviarComando(command);
-
-        //    if (OperacaoValida())
-        //    {
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    return View("Index", await _pedidoQueries.ObterCarrinhoCliente(ClienteId));
-        //}
+        [HttpPost]
+        [Route("atualizar-item")]
+        public async Task<IActionResult> AtualizarItem(Guid id, int quantidade)
+        {
+            var request = new RestRequest("Carrinho/atualizar-item", Method.Post);
+            request.AddParameter("id", id);
+            request.AddParameter("quantidade", quantidade);
+            await _restClient.PostAsync<CarrinhoDto>(request);
+            return RedirectToAction("Index");
+        }
 
 
-        //[HttpPost]
-        //[Route("aplicar-voucher")]
-        //public async Task<IActionResult> AplicarVoucher(string voucherCodigo)
-        //{
-        //    var command = new AplicarVoucherPedidoCommand(ClienteId, voucherCodigo);
-        //    await _mediatorHandler.EnviarComando(command);
-
-        //    if (OperacaoValida())
-        //    {
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    return View("Index", await _pedidoQueries.ObterCarrinhoCliente(ClienteId));
-        //}
+        [HttpPost]
+        [Route("aplicar-voucher")]
+        public async Task<IActionResult> AplicarVoucher(string voucherCodigo)
+        {
+            var request = new RestRequest("Carrinho/aplicar-voucher", Method.Post);            
+            request.AddParameter("voucherCodigo", voucherCodigo);
+            await _restClient.PostAsync<CarrinhoDto>(request);
+            return RedirectToAction("Index");          
+        }
 
         //[Route("resumo-da-compra")]
         //public async Task<IActionResult> ResumoDaCompra()

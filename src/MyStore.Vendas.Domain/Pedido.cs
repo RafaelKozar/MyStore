@@ -1,4 +1,5 @@
-﻿using MyStore.Core.DomainObjects;
+﻿using FluentValidation.Results;
+using MyStore.Core.DomainObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,24 +39,19 @@ namespace MyStore.Vendas.Domain
             _pedidoItems = new List<PedidoItem>();
         }
 
-        //public ValidationResult AplicarVoucher(Voucher voucher)
-        //{
-        //    var validationResult = voucher.ValidarSeAplicavel();
-        //    if (!validationResult.IsValid) return validationResult;
-
-        //    Voucher = voucher;
-        //    VoucherUtilizado = true;
-        //    CalcularValorPedido();
-
-        //    return validationResult;
-        //}
-
-        public void AplicarVoucher(Voucher voucher)
+        public ValidationResult AplicarVoucher(Voucher voucher)
         {
+            var validationResult = voucher.ValidarSeAplicavel();
+            if (!validationResult.IsValid) return validationResult;
+
             Voucher = voucher;
             VoucherUtilizado = true;
             CalcularValorPedido();
+
+            return validationResult;
         }
+
+        
 
         public void CalcularValorPedido()
         {
