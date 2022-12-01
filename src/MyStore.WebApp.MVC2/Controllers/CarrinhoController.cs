@@ -73,8 +73,9 @@ namespace MyStore.WebApp.MVC2.Controllers
         {
             var request = new RestRequest("Carrinho/remover-item", Method.Post);
             request.AddParameter("id", id);            
-            await _restClient.PostAsync<CarrinhoDto>(request);
-            return RedirectToAction("Index");        
+            var response = await _restClient.PostAsync<CarrinhoDto>(request);
+            if(response == null) return RedirectToAction("Index");
+            return View("Index", response);
         }
 
         [HttpPost]
@@ -84,8 +85,9 @@ namespace MyStore.WebApp.MVC2.Controllers
             var request = new RestRequest("Carrinho/atualizar-item", Method.Post);
             request.AddParameter("id", id);
             request.AddParameter("quantidade", quantidade);
-            await _restClient.PostAsync<CarrinhoDto>(request);
-            return RedirectToAction("Index");
+            var response = await _restClient.PostAsync<CarrinhoDto>(request);
+            if (response == null) return RedirectToAction("Index");
+            return View("Index", response);
         }
 
 
@@ -95,8 +97,9 @@ namespace MyStore.WebApp.MVC2.Controllers
         {
             var request = new RestRequest("Carrinho/aplicar-voucher", Method.Post);            
             request.AddParameter("voucherCodigo", voucherCodigo);
-            await _restClient.PostAsync<CarrinhoDto>(request);
-            return RedirectToAction("Index");          
+            var response = await _restClient.PostAsync<CarrinhoDto>(request);
+            if (response == null) return RedirectToAction("Index");
+            return View("Index", response);
         }
 
         //[Route("resumo-da-compra")]

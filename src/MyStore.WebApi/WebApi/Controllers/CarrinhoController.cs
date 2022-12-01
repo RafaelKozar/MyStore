@@ -121,13 +121,17 @@ namespace WebApi.Controllers
             var command = new RemoverItemPedidoCommand(ClienteId, id);
             await _mediatorHandler.EnviarComando(command);
 
+            
+
             if (OperacaoValida())
             {
                 return Ok();
                 ///return RedirectToAction("Index");
             }
 
-            return Ok(await _pedidoQueries.ObterCarrinhoCliente(ClienteId));
+            var result = await _pedidoQueries.ObterCarrinhoCliente(ClienteId);
+            ConcateneMensagens(result);            
+            return Ok();
         }
 
         [HttpPost]
@@ -141,14 +145,17 @@ namespace WebApi.Controllers
             var command = new AtualizarItemPedidoCommand(ClienteId, id, quantidade);
             await _mediatorHandler.EnviarComando(command);
 
+            
+
             if (OperacaoValida())
             {
                 return Ok();
                 //return RedirectToAction("Index");
             }
 
-            var re = await _pedidoQueries.ObterCarrinhoCliente(ClienteId);
-            return Ok(re);
+            var result = await _pedidoQueries.ObterCarrinhoCliente(ClienteId);
+            ConcateneMensagens(result);
+            return Ok(result);
         }
 
         [HttpPost]
@@ -158,13 +165,39 @@ namespace WebApi.Controllers
             var command = new AplicarVoucherPedidoCommand(ClienteId, voucherCodigo);
             await _mediatorHandler.EnviarComando(command);
 
+            
+
             if (OperacaoValida())
             {
                 return Ok();
                 //return RedirectToAction("Index");
             }
 
-            return Ok(await _pedidoQueries.ObterCarrinhoCliente(ClienteId));
+            var result = await _pedidoQueries.ObterCarrinhoCliente(ClienteId);
+            ConcateneMensagens(result);
+            return Ok(result);
+        }
+
+        public void ConcateneMensagens(CarrinhoDto carrinho)
+        {
+            var messages = ObterMensagensErro().ToList();
+
+            //string str = string.Empty;
+            //messages.ForEach(w =>
+            //{
+            //    str += $"{w} +";
+            //});
+
+            var builder = new StringBuilder();
+
+            foreach (var m in messages)
+            {
+                builder.Append(m).Append("-");
+            }
+
+            var str = builder.ToString();
+            str = str.Remove(str.Length - 2);
+            carrinho.Messages = str;
         }
 
         //[Route("resumo-da-compra")]
