@@ -1,6 +1,9 @@
 ﻿using MediatR;
 using MyStore.Core.Comunication.Mediator;
+using MyStore.Core.DomainObjects.DTO;
+using MyStore.Core.Extensions;
 using MyStore.Core.Messages;
+using MyStore.Core.Messages.CommonMessages.IntegrationEvents;
 using MyStore.Core.Messages.CommonMessages.Notifications;
 using MyStore.Vendas.Application.Events;
 using MyStore.Vendas.Domain;
@@ -16,7 +19,8 @@ namespace MyStore.Vendas.Application.Commands
         IRequestHandler<AdicionarItemPedidoCommand, bool>,
         IRequestHandler<AtualizarItemPedidoCommand, bool>,
         IRequestHandler<RemoverItemPedidoCommand, bool>,
-        IRequestHandler<AplicarVoucherPedidoCommand, bool>
+        IRequestHandler<AplicarVoucherPedidoCommand, bool>,
+        IRequestHandler<IniciarPedidoCommand, bool>
     {
         private readonly IPedidoRepository _pedidoRepository;
         private readonly IMediatorHandler _mediatorHandler;
@@ -161,6 +165,23 @@ namespace MyStore.Vendas.Application.Commands
 
             _pedidoRepository.Atualizar(pedido);
 
+            return await _pedidoRepository.UnitOfWork.Commit();
+        }
+
+        public async Task<bool> Handle(IniciarPedidoCommand message, CancellationToken cancellationToken)
+        {
+            if (!ValidarComando(message)) return false;
+            var pedido = await _pedidoRepository.ObterPedidoRascunhoPorClienteId(message.ClienteId);
+            pedido.IniciarPedido();
+
+            var itensList = new List<Item>();
+            pedido.PedidoItems.ForEach(i => itensList.Add(new Item { Id = i.ProdutoId, Quantidade = i.Quantidade }));
+            var listaProdutosPedido = new ListaProdutosPedido { PedidoId = pedido.Id, Itens = itensList };
+
+            pedido.AdicionarEvento(new PedidoIniciadoEvent(pedido.Id, pedido.ClienteId, pedido.ValorTotal, listaProdutosPedido, message.NomeCartao, message.NumeroCartao, message.ExpiracaoCartao, message.CvvCartao));
+
+    
+            _pedidoRepository.Atualizar(pedido);
             return await _pedidoRepository.UnitOfWork.Commit();
         }
 

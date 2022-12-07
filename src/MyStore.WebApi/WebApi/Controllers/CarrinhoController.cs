@@ -200,30 +200,32 @@ namespace WebApi.Controllers
             carrinho.Messages = str;
         }
 
-        //[Route("resumo-da-compra")]
-        //public async Task<IActionResult> ResumoDaCompra()
-        //{
-        //    return View(await _pedidoQueries.ObterCarrinhoCliente(ClienteId));
-        //}
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CarrinhoDto))]
+        [Route("resumo-da-compra")]
+        public async Task<IActionResult> ResumoDaCompra()
+        {
+            return Ok(await _pedidoQueries.ObterCarrinhoCliente(ClienteId));
+        }
 
-        //[HttpPost]
-        //[Route("iniciar-pedido")]
-        //public async Task<IActionResult> IniciarPedido(CarrinhoViewModel carrinhoViewModel)
-        //{
-        //    var carrinho = await _pedidoQueries.ObterCarrinhoCliente(ClienteId);
+        [HttpPost]
+        [Route("iniciar-pedido")]
+        public async Task<IActionResult> IniciarPedido(CarrinhoDto carrinhoDto)
+        {
+            var carrinho = await _pedidoQueries.ObterCarrinhoCliente(ClienteId);
 
-        //    var command = new IniciarPedidoCommand(carrinho.PedidoId, ClienteId, carrinho.ValorTotal, carrinhoViewModel.Pagamento.NomeCartao,
-        //        carrinhoViewModel.Pagamento.NumeroCartao, carrinhoViewModel.Pagamento.ExpiracaoCartao, carrinhoViewModel.Pagamento.CvvCartao);
+            var command = new IniciarPedidoCommand(carrinho.PedidoId, ClienteId, carrinho.ValorTotal, carrinhoDto.Pagamento.NomeCartao,
+                carrinhoDto.Pagamento.NumeroCartao, carrinhoDto.Pagamento.ExpiracaoCartao, carrinhoDto.Pagamento.CvvCartao);
 
-        //    await _mediatorHandler.EnviarComando(command);
+            await _mediatorHandler.EnviarComando(command);
 
-        //    if (OperacaoValida())
-        //    {
-        //        return RedirectToAction("Index", "Pedido");
-        //    }
+            if (OperacaoValida())
+            {
+                return RedirectToAction("Index", "Pedido");
+            }
 
-        //    return View("ResumoDaCompra", await _pedidoQueries.ObterCarrinhoCliente(ClienteId));
-        //}
+            return View("ResumoDaCompra", await _pedidoQueries.ObterCarrinhoCliente(ClienteId));
+        }
 
 
 

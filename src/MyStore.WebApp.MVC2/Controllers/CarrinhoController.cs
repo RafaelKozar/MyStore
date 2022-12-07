@@ -102,11 +102,13 @@ namespace MyStore.WebApp.MVC2.Controllers
             return View("Index", response);
         }
 
-        //[Route("resumo-da-compra")]
-        //public async Task<IActionResult> ResumoDaCompra()
-        //{
-        //    return View(await _pedidoQueries.ObterCarrinhoCliente(ClienteId));
-        //}
+        [Route("resumo-da-compra")]
+        public async Task<IActionResult> ResumoDaCompra()
+        {
+            var request = new RestRequest("Carrinho/resumo-da-compra", Method.Get);
+          
+            return View(await _restClient.GetAsync<CarrinhoDto>(request));           
+        }
 
         //[HttpPost]
         //[Route("iniciar-pedido")]
