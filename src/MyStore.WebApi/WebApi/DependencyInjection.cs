@@ -4,7 +4,11 @@ using MyStore.Catalago.Data.Repository;
 using MyStore.Catalago.Domain;
 using MyStore.Catalago.Domain.Events;
 using MyStore.Core.Comunication.Mediator;
+using MyStore.Core.Messages.CommonMessages.IntegrationEvents;
 using MyStore.Core.Messages.CommonMessages.Notifications;
+using MyStore.Pagamentos.AntiCorruption;
+using MyStore.Pagamentos.Bussiness;
+using MyStore.Pagamentos.Data.Repository;
 using MyStore.Vendas.Application.Commands;
 using MyStore.Vendas.Application.Events;
 using MyStore.Vendas.Application.Queries;
@@ -42,6 +46,16 @@ namespace WebApi
             services.AddScoped<INotificationHandler<PedidoRascunhoIniciadoEvent>, PedidoEventHandler>();
             services.AddScoped<INotificationHandler<PedidoAtualizadoEvent>, PedidoEventHandler>();
             services.AddScoped<INotificationHandler<PedidoItemAdicionadoEvent>, PedidoEventHandler>();
+
+            // Pagamento
+            services.AddScoped<IPagamentoRepository, PagamentoRepository>();
+            services.AddScoped<IPagamentoService, PagamentoService>();
+            services.AddScoped<IPagamentoCartaoCreditoFacade, PagamentoCartaoCreditoFacade>();
+            services.AddScoped<IPayPalGateway, PayPalGateway>();
+            services.AddScoped<IConfigurationManager, MyStore.Pagamentos.AntiCorruption.ConfigurationManager>();
+            
+
+            //services.AddScoped<INotificationHandler<PedidoEstoqueConfirmadoEvent>, PagamentoEventHandler>();
         }
     }
 }

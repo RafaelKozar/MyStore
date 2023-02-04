@@ -6,7 +6,7 @@ using MyStore.Catalago.Data;
 using MyStore.Catalago.Data.Repository;
 using MyStore.Catalago.Domain;
 using MyStore.Catalago.Domain.Events;
-
+using MyStore.Pagamentos.Data;
 using MyStore.Vendas.Data;
 using WebApi;
 
@@ -28,6 +28,11 @@ builder.Services.AddDbContext<CatalagoContext>(p =>
 
 builder.Services.AddDbContext<VendasContext>(p =>
     p.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddDbContext<PagamentoContext>(p =>
+    p.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
 
 builder.Services.RegisterServices();
 

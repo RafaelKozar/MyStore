@@ -23,3 +23,9 @@ src/MyStore.WebApp.MVC2/wwwroot/lib/
 /src/MyStore.Vendas.Application/bin/Debug/net6.0
 /src/MyStore.Vendas.Data/bin/Debug/net6.0
 /src/MyStore.Vendas.Domain/bin/Debug/net6.0
+/src/MyStore.Pagamentos.AntiCorruption/bin/Debug/net6.0
+/src/MyStore.Pagamentos.AntiCorruption/obj
+/src/MyStore.Pagamentos.Bussiness/bin/Debug/net6.0
+/src/MyStore.Pagamentos.Bussiness/obj
+/src/MyStore.Pagamentos.Data/bin/Debug/net6.0
+/src/MyStore.Pagamentos.Data/obj
