@@ -49,7 +49,7 @@ namespace MyStore.Pagamentos.Bussiness
             if (transacao.StatusTransacao == StatusTransacao.Pago)
             {
                 pagamento.AdicionarEvento(new PagamentoRealizadoEvent(pedido.Id, pagamentoPedido.ClienteId, transacao.PagamentoId, transacao.Id, pedido.Valor));
-
+                pagamento.Status = "true";
                 _pagamentoRepository.Adicionar(pagamento);
                 _pagamentoRepository.AdicionarTransacao(transacao);
 

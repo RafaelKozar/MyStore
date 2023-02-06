@@ -178,6 +178,37 @@ namespace WebApi.Controllers
             return Ok(result);
         }
 
+       
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CarrinhoDto))]
+        [Route("resumo-da-compra")]
+        public async Task<IActionResult> ResumoDaCompra()
+        {
+            return Ok(await _pedidoQueries.ObterCarrinhoCliente(ClienteId));
+        }
+
+        [HttpPost]
+        [Route("iniciar-pedido")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CarrinhoDto))]
+        public async Task<IActionResult> IniciarPedido([FromBody] CarrinhoDto carrinhoDto)
+        {
+            var carrinho = await _pedidoQueries.ObterCarrinhoCliente(ClienteId);
+
+            var command = new IniciarPedidoCommand(carrinho.PedidoId, ClienteId, carrinho.ValorTotal, carrinhoDto.Pagamento.NomeCartao,
+                carrinhoDto.Pagamento.NumeroCartao, carrinhoDto.Pagamento.ExpiracaoCartao, carrinhoDto.Pagamento.CvvCartao);
+
+            await _mediatorHandler.EnviarComando(command);
+
+            if (OperacaoValida())
+            {
+                //return RedirectToAction("Index", "Pedido");
+                return Ok();
+            }
+
+            return Ok( await _pedidoQueries.ObterCarrinhoCliente(ClienteId));
+        }
+
         public void ConcateneMensagens(CarrinhoDto carrinho)
         {
             var messages = ObterMensagensErro().ToList();
@@ -199,35 +230,6 @@ namespace WebApi.Controllers
             str = str.Remove(str.Length - 2);
             carrinho.Messages = str;
         }
-
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CarrinhoDto))]
-        [Route("resumo-da-compra")]
-        public async Task<IActionResult> ResumoDaCompra()
-        {
-            return Ok(await _pedidoQueries.ObterCarrinhoCliente(ClienteId));
-        }
-
-        [HttpPost]
-        [Route("iniciar-pedido")]
-        public async Task<IActionResult> IniciarPedido(CarrinhoDto carrinhoDto)
-        {
-            var carrinho = await _pedidoQueries.ObterCarrinhoCliente(ClienteId);
-
-            var command = new IniciarPedidoCommand(carrinho.PedidoId, ClienteId, carrinho.ValorTotal, carrinhoDto.Pagamento.NomeCartao,
-                carrinhoDto.Pagamento.NumeroCartao, carrinhoDto.Pagamento.ExpiracaoCartao, carrinhoDto.Pagamento.CvvCartao);
-
-            await _mediatorHandler.EnviarComando(command);
-
-            if (OperacaoValida())
-            {
-                return RedirectToAction("Index", "Pedido");
-            }
-
-            return View("ResumoDaCompra", await _pedidoQueries.ObterCarrinhoCliente(ClienteId));
-        }
-
-
 
     }
 }

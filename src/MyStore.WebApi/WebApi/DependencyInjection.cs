@@ -8,6 +8,7 @@ using MyStore.Core.Messages.CommonMessages.IntegrationEvents;
 using MyStore.Core.Messages.CommonMessages.Notifications;
 using MyStore.Pagamentos.AntiCorruption;
 using MyStore.Pagamentos.Bussiness;
+using MyStore.Pagamentos.Bussiness.Events;
 using MyStore.Pagamentos.Data.Repository;
 using MyStore.Vendas.Application.Commands;
 using MyStore.Vendas.Application.Events;
@@ -33,6 +34,8 @@ namespace WebApi
             services.AddScoped<IProdutoAppService, ProdutoAppService>();
 
             services.AddScoped<INotificationHandler<ProdutoAbaixoEstoqueEvent>, ProdutoEventHandler>();
+            services.AddScoped<INotificationHandler<PedidoIniciadoEvent>, ProdutoEventHandler>();
+            services.AddScoped<INotificationHandler<PedidoProcessamentoCanceladoEvent>, ProdutoEventHandler>();
 
             //Vendas            
             services.AddScoped<IPedidoRepository, PedidoRepository>();
@@ -42,10 +45,18 @@ namespace WebApi
             services.AddScoped<IRequestHandler<AtualizarItemPedidoCommand, bool>, PedidoCommandHandler>();
             services.AddScoped<IRequestHandler<RemoverItemPedidoCommand, bool>, PedidoCommandHandler>();
             services.AddScoped<IRequestHandler<AplicarVoucherPedidoCommand, bool>, PedidoCommandHandler>();
+            services.AddScoped<IRequestHandler<IniciarPedidoCommand, bool>, PedidoCommandHandler>();
+            services.AddScoped<IRequestHandler<FinalizarPedidoCommand, bool>, PedidoCommandHandler>();
+            services.AddScoped<IRequestHandler<CancelarProcessamentoPedidoCommand, bool>, PedidoCommandHandler>();
+            services.AddScoped<IRequestHandler<CancelarProcessamentoPedidoEstornarEstoqueCommand, bool>, PedidoCommandHandler>();
 
             services.AddScoped<INotificationHandler<PedidoRascunhoIniciadoEvent>, PedidoEventHandler>();
             services.AddScoped<INotificationHandler<PedidoAtualizadoEvent>, PedidoEventHandler>();
             services.AddScoped<INotificationHandler<PedidoItemAdicionadoEvent>, PedidoEventHandler>();
+
+            services.AddScoped<INotificationHandler<PedidoEstoqueRejeitadoEvent>, PedidoEventHandler>();
+            services.AddScoped<INotificationHandler<PagamentoRealizadoEvent>, PedidoEventHandler>();
+            services.AddScoped<INotificationHandler<PagamentoRecusadoEvent>, PedidoEventHandler>();
 
             // Pagamento
             services.AddScoped<IPagamentoRepository, PagamentoRepository>();
@@ -54,7 +65,7 @@ namespace WebApi
             services.AddScoped<IPayPalGateway, PayPalGateway>();
             services.AddScoped<IConfigurationManager, MyStore.Pagamentos.AntiCorruption.ConfigurationManager>();
             
-
+            services.AddScoped<INotificationHandler<PedidoEstoqueConfirmadoEvent>, PagamentoEventHandler>();   
             //services.AddScoped<INotificationHandler<PedidoEstoqueConfirmadoEvent>, PagamentoEventHandler>();
         }
     }
