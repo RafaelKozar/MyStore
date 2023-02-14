@@ -29,3 +29,5 @@ src/MyStore.WebApp.MVC2/wwwroot/lib/
 /src/MyStore.Pagamentos.Bussiness/obj
 /src/MyStore.Pagamentos.Data/bin/Debug/net6.0
 /src/MyStore.Pagamentos.Data/obj
+/src/EventSourcing/bin/Debug/net6.0
+/src/EventSourcing/obj
